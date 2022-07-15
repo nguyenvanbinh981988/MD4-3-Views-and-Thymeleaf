@@ -15,6 +15,12 @@
     <button><a href="/create">Create Product</a></button>
     <br>
     <br>
+    <form action="/Search" method="post">
+        <input name="search">
+        <input type="submit" value="search">
+    </form>
+    <br>
+    <br>
     <a class="btn btn-success" href="/create">Danh sách hàng:</a>
 
     <table class="table table-striped">
@@ -35,9 +41,9 @@
             <td th:text="${p.getId()}"></td>
             <td th:text="${p.getName()}"></td>
             <td th:text="${p.getPrice()}"></td>
-            <td><img th:src="${p.getImg()}" width="200" height="100%"></td>
+            <td><img th:src="${p.getImg()}" width="200" height="100%" ></td>
             <td th:text="${p.getCategory().getName()}"></td>
-            <td th:text="${p.getStatus()}"></td>
+            <td th:text="${p.getStatus()?'San hang' : 'dang cam co TQ'}" th:style="${p.getStatus()? 'color : blue' : 'color : red'}"></td>
             <td><a th:href="@{/edit(id=${p.getId()})}" class="btn btn-warning">Edit</a></td>
             <td><a th:href="@{/delete(id=${p.getId()})}" class="btn btn-danger">Delete</a>
             </td>

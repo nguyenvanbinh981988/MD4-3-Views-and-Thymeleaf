@@ -7,7 +7,6 @@ import models.Product;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -49,15 +48,19 @@ public class HomeController {
 
 
     @GetMapping("/edit")
-    public String showEdit(@RequestParam int id, Model model) {
+    public ModelAndView showEdit(@RequestParam int id, Model model) {
+        ModelAndView modelAndView = new ModelAndView("edit");
         for (Product p : crudProduct.productList) {
             if (p.getId() == id) {
-                model.addAttribute("product", p);
+                modelAndView.addObject("product", p);
                 break;
             }
         }
-        ModelAndView modelAndView = new ModelAndView("edit");
         modelAndView.addObject("categories",crudCategory.categoryList);
+
+        Boolean[] statusT = {true,false};
+        modelAndView.addObject("statusT",statusT);
+
         return modelAndView;
     }
 
@@ -82,7 +85,7 @@ public class HomeController {
         return "redirect:/home";
     }
 
-    @GetMapping("/Search")
+    @PostMapping("/Search")
     public String search(@RequestParam String search,Model model) {
         List<Product> findSearch = new ArrayList<>();
         for (Product p : crudProduct.productList) {

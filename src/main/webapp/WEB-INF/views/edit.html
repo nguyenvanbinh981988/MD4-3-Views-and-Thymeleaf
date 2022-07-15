@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<form action="/create" method="post">
+<form action="/edit" method="post">
 <div class="container">
     <h2>Striped Rows</h2>
     <table class="table table-striped">
@@ -26,17 +26,16 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:object="${product}">
-            <td><input name="id"  th:text="${product.getId()}"></td>
-            <td><input name="name"  th:text="${product.getName()}"></td>
-            <td><input name="price"  th:text="${product.getPrice()}"></td>
-            <td><input name="img"  th:text="${product.getImg()}"></td>
-            <td><select name="categoryId"  th:field="*{category.getId()}">
-                    <option th:each="c : ${categories}" th:value="${c.getId()}" th:text="${c.getName()}"></option>
+        <tr>
+            <td><input name="id"  th:value="${product.getId()}"></td>
+            <td><input name="name"  th:value="${product.getName()}"></td>
+            <td><input name="price"  th:value="${product.getPrice()}"></td>
+            <td><input name="img"  th:value="${product.getImg()}"></td>
+            <td><select name="categoryId">
+                    <option th:each="c : ${categories}" th:value="${c.getId()}" th:text="${c.getName()}" th:selected="${c.getId() == product.getCategory().getId()}"></option>
             </select></td>
-            <td><select name="status" th:field="*{status}">
-                <option value="true">true</option>
-                <option value="false">false</option>
+            <td><select name="status">
+                <option th:each="c : ${statusT}" th:value="${c}" th:text="${c}" th:selected="${c == product.getStatus()}"></option>
             </select></td>
         </tr>
 
